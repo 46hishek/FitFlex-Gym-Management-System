@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('form[data-validate]').forEach(f=>f.addEventListener('submit',e=>{if(!f.checkValidity()){e.preventDefault();f.reportValidity();}}));});

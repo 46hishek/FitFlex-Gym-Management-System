@@ -1,0 +1,1 @@
+<footer class="app-footer">© <?= date('Y') ?> FitFlex Gym Management <span>Built for fitness. Designed for simplicity.</span></footer></div></main></body></html>

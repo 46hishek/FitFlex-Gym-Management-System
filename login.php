@@ -1,0 +1,11 @@
+<?php
+session_start(); require_once "config/db.php";
+if(isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
+$error="";
+if($_SERVER['REQUEST_METHOD']==='POST'){
+ $username=trim($_POST['username']??''); $password=$_POST['password']??'';
+ $stmt=$pdo->prepare("SELECT * FROM admins WHERE username=?"); $stmt->execute([$username]); $admin=$stmt->fetch();
+ if($admin && password_verify($password,$admin['password_hash'])) { session_regenerate_id(true); $_SESSION['admin_id']=$admin['id']; $_SESSION['username']=$admin['username']; header("Location: dashboard.php"); exit; }
+ $error="Invalid username or password.";
+}
+?><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Login | FitFlex</title><link rel="stylesheet" href="assets/style.css"></head><body class="login-page"><div class="login-layout"><section class="login-art"><a class="brand light" href="index.php"><span class="brand-mark">F</span> FitFlex</a><div><span class="eyebrow">ADMIN WORKSPACE</span><h1>Make room for<br><em>better progress.</em></h1><p>Your members, team and daily operations — all in one place.</p></div><small>STRONGER EVERY DAY ✦</small></section><section class="login-side"><form method="post" class="login-box"><span class="eyebrow">WELCOME BACK</span><h2>Sign in to FitFlex</h2><p>Enter administrator credentials to continue.</p><?php if($error): ?><div class="alert error"><?= htmlspecialchars($error) ?></div><?php endif; ?><label>Username</label><input name="username" required autocomplete="username" placeholder="Enter username"><label>Password</label><input name="password" type="password" required autocomplete="current-password" placeholder="Enter password"><button class="btn btn-primary full" type="submit">Sign in →</button><div class="demo"><b>Demo credentials</b><br>Username: <code>admin</code><br>Password: <code>password</code></div><a class="back" href="index.php">← Back to home</a></form></section></div></body></html>

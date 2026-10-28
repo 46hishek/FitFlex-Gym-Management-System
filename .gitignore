@@ -1,0 +1,5 @@
+
+/config/db.php
+/reset_admin.php
+.env
+/vendor/

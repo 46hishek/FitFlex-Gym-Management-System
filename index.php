@@ -1,0 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['admin_id'])) { header("Location: dashboard.php"); exit; }
+require_once "config/db.php";
+$count = (int)$pdo->query("SELECT COUNT(*) FROM members")->fetchColumn();
+?>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FitFlex | Gym Management</title><link rel="stylesheet" href="assets/style.css"></head>
+<body class="landing"><nav class="landing-nav"><a class="brand" href="index.php"><span class="brand-mark">F</span> FitFlex</a><a class="btn btn-outline" href="login.php">Admin Login ↗</a></nav>
+<main class="hero"><div class="hero-copy"><span class="eyebrow">YOUR GYM. ONE SMART SPACE.</span><h1>Stronger members.<br><em>Smoother management.</em></h1><p>Manage memberships, trainers and attendance from one simple dashboard. Spend less time on admin and more time building a stronger community.</p><div class="hero-actions"><a class="btn btn-primary" href="login.php">Open dashboard →</a><a class="btn btn-outline" href="#features">Explore features</a></div><div class="hero-note"><span class="dot"></span> Member management made simple</div></div>
+<div class="hero-visual"><div class="ring ring1"></div><div class="ring ring2"></div><div class="hero-emblem"><span>✦</span><small>TRAIN SMARTER</small><strong>FITFLEX</strong></div><div class="float-card float-top">↗ <span><small>MEMBERS</small><b><?= $count ?> registered</b></span></div><div class="float-card float-bottom">✓ <span><small>DAILY ROUTINE</small><b>Keep moving</b></span></div></div></main>
+<section id="features" class="features"><div class="section-title"><span class="eyebrow">BUILT FOR YOUR ROUTINE</span><h2>Everything your gym needs</h2></div><div class="feature-grid"><article><b>♙</b><h3>Member records</h3><p>Add, update and search member profiles.</p></article><article><b>◇</b><h3>Membership plans</h3><p>Organize duration, pricing and plans.</p></article><article><b>◷</b><h3>Daily attendance</h3><p>Record check-ins and track visits.</p></article><article><b>▤</b><h3>Clear reports</h3><p>View member data and print reports.</p></article></div></section>
+<footer class="landing-footer">© <?= date('Y') ?> FitFlex Gym Management <span>Built for fitness. Designed for simplicity.</span></footer></body></html>
